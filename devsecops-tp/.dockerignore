@@ -1,0 +1,15 @@
+.git
+.github
+.gitignore
+node_modules
+npm-debug.log
+.env
+.env.*
+coverage
+tests
+docs
+scripts
+aws
+README.md
+Dockerfile
+.dockerignore

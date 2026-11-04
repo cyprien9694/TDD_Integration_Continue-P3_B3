@@ -1,0 +1,34 @@
+{
+  "family": "devsecops-tp",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "runtimePlatform": { "cpuArchitecture": "X86_64", "operatingSystemFamily": "LINUX" },
+  "executionRoleArn": "arn:aws:iam::<ACCOUNT_ID>:role/devsecops-tp-execution",
+  "taskRoleArn": "arn:aws:iam::<ACCOUNT_ID>:role/devsecops-tp-task",
+  "containerDefinitions": [
+    {
+      "name": "app",
+      "image": "<remplacé par le workflow>",
+      "essential": true,
+      "portMappings": [{ "containerPort": 3000, "protocol": "tcp" }],
+      "environment": [{ "name": "PORT", "value": "3000" }],
+      "secrets": [
+        {
+          "name": "EXAMPLE_SECRET",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:<ACCOUNT_ID>:secret:devsecops-tp/example"
+        }
+      ],
+      "readonlyRootFilesystem": true,
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/devsecops-tp",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "app"
+        }
+      }
+    }
+  ]
+}
